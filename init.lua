@@ -2,7 +2,7 @@ local has_config, config = pcall(require, "config.tailwind")
 local extends = { "colors" }
 local spacing = { 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64 }
 local style = {}
-local tone={50,       100,      200,      300,      400,      500,      600,      700,      800,       900,      950  }
+local tone={50,         100,        200,        300,        400,        500,        600,        700,        800,        900,        950  }
 local rem=4
 local spreadsheet = {
 	slate=  {"#f8fafc","#f1f5f9","#e2e8f0","#cbd5e1","#94a3b8","#64748b","#475569","#334155","#1e293b","#0f172a","#020617"},
@@ -100,6 +100,10 @@ end
 
 for k, v in pairs {left="Left",center="Center",right="Right"} do
 	style[".text-"..k] = { TextHorizontalAlignment = v }
+end
+
+for k, v in pairs {top="Top",middle="Center",bottom="Bottom"} do
+	style[".text-"..k] = { TextVerticalAlignment = v }
 end
 
 for k, v in pairs {
