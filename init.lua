@@ -37,11 +37,11 @@ for k1, v1 in pairs {m="Margin",p="Padding"} do
 			if hack[v2] then
 				name = v2..v1
 			end
-			style[class] = { [name] = string.format("%d", v3*rem) }
+			style[class] = { ["Node."..name] = string.format("%d", v3*rem) }
 		end
 		style[string.format(".%s-%s", k1, v3)] = {
-			["Horizontal"..v1] = string.format("%d", v3*rem),
-			["Vertical"..v1] = string.format("%d", v3*rem),
+			["Node.Horizontal"..v1] = string.format("%d", v3*rem),
+			["Node.Vertical"..v1] = string.format("%d", v3*rem),
 		}
 	end
 end
@@ -64,7 +64,13 @@ if has_config and config.extend then
 	end
 end
 
-for k1, v1 in pairs {bg="Background",text="Foreground",border="Border",ring="Ring",placeholder="Placeholder"} do
+for k1, v1 in pairs {
+		placeholder="TextBlockConcept.Placeholder",
+		text="Node2D.Foreground",
+		bg="Node2D.Background",
+		ring="Node2D.Ring",
+		border="Node.Border",
+	} do
 	for k2, v2 in pairs(theme.colors) do
 		local name = string.format(".%s-%s", k1, k2)
 		style[name] = { [v1.."Color"] = v2 }
@@ -75,35 +81,47 @@ for k1, v1 in pairs {middle="Center",top="Top",bottom="Bottom"} do
 	style[".align-"..k1] = { VerticalAlignment = v1 }
 	for k2, v2 in pairs {center="Center",left="Left",right="Right"} do
 		style[string.format(".align-%s-%s", k1, k2)] = {
-			HorizontalAlignment = v2,
-			VerticalAlignment = v1
+			["Node.HorizontalAlignment"] = v2,
+			["Node.VerticalAlignment"] = v1
 		}
-		style[".align-"..k2] = { HorizontalAlignment = v2 }
+		style[".align-"..k2] = { ["Node.HorizontalAlignment"] = v2 }
 	end
 end
 
 for _, v1 in ipairs(spacing) do
-	for k2, v2 in pairs {rounded="BorderRadius",text="FontSize",gap="Spacing",w="Width",h="Height"} do
+	for k2, v2 in pairs {
+			rounded="Node.BorderRadius",
+			text="TextRun.FontSize",
+			gap="StackView.Spacing",
+			w="Node.Width",
+			h="Node.Height"
+		} do
 		style[string.format(".%s-%s", k2, v1)] = { [v2] = v1*rem }
 	end
 end
 
 for _, v1 in ipairs(spacing) do
-	for k2, v2 in pairs {border="BorderWidth", underline="UnderlineWidth", ["underline-offset"]="UnderlineOffset", ring="RingWidth", ["ring-offset"]="RingOffset"} do
+	for k2, v2 in pairs {
+			["border"]="Node.BorderWidth",
+			["underline"]="TextRun.UnderlineWidth",
+			["underline-offset"]="TextRun.UnderlineOffset",
+			["ring"]="Node2D.RingWidth",
+			["ring-offset"]="Node2D.RingOffset"
+		} do
 		style[string.format(".%s-%s", k2, v1)] = { [v2] = v1 }
 	end
 end
 
 for k, v in pairs {start="Start",["end"]="End",center="Center",baseline="Baseline",stretch="Stretch"} do
-	style[".items-"..k] = { AlignItems = v }
+	style[".items-"..k] = { ["StackView.AlignItems"] = v }
 end
 
 for k, v in pairs {left="Left",center="Center",right="Right"} do
-	style[".text-"..k] = { TextHorizontalAlignment = v }
+	style[".text-"..k] = { ["TextBlockConcept.TextHorizontalAlignment"] = v }
 end
 
 for k, v in pairs {top="Top",middle="Center",bottom="Bottom"} do
-	style[".text-"..k] = { TextVerticalAlignment = v }
+	style[".text-"..k] = { ["TextBlockConcept.TextVerticalAlignment"] = v }
 end
 
 for k, v in pairs {
@@ -121,11 +139,11 @@ for k, v in pairs {
 	["8xl"] =  { 96,  96},
 	["9xl"] =  { 128, 128},
 } do
-	style[".text-"..k] = { FontSize = v[1], LineHeight = v[2] }
+	style[".text-"..k] = { ["TextRun.FontSize"] = v[1], ["TextRun.LineHeight"] = v[2] }
 end
 
 for k, v in pairs {col="Vertical",row="Horizontal"} do
-	style[".flex-"..k] = { Direction = v }
+	style[".flex-"..k] = { ["StackView.Direction"] = v }
 end
 
 for k1, v1 in pairs {
@@ -137,18 +155,18 @@ for k1, v1 in pairs {
 } do
 	for k2, v2 in pairs {x="X", y="Y"} do
 		local class = string.format(".overflow-%s-%s", k2, k1)
-		style[class] = { ["Overflow"..v2] = v1 }
+		style[class] = { ["Node2D.Overflow"..v2] = v1 }
 	end	
 end
 
 style[".overflow-x-scroll"] = {
-	OverflowX = "Scroll",
-	ClipChildren = true,
+	["Node2D.OverflowX"] = "Scroll",
+	["Node2D.ClipChildren"] = true,
 }
 
 style[".overflow-y-scroll"] = {
-	OverflowY = "Scroll",
-	ClipChildren = true,
+	["Node2D.OverflowY"] = "Scroll",
+	["Node2D.ClipChildren"] = true,
 }
 
 for k, v in pairs {
@@ -159,19 +177,19 @@ for k, v in pairs {
 	["around"]  = "SpaceAround",
 	["evenly"]  = "SpaceEvenly"
 } do
-	style[".justify-"..k] = { JustifyContent = v }
+	style[".justify-"..k] = { ["StackView.JustifyContent"] = v }
 end	
 
 
-style[".font-normal"] = { FontWeight = "Normal" }
-style[".font-bold"] = { FontWeight = "Bold" }
-style[".non-italic"] = { FontStyle = "Normal" }
-style[".italic"] = { FontStyle = "Italic" }
-style[".w-full"] = { HorizontalAlignment = "Stretch" }
-style[".h-full"] = { VerticalAlignment = "Stretch" }
-style[".rounded"] = { BorderRadius = "8" }
-style[".border"] = { BorderWidth = "1" }
-style[".underline"] = { UnderlineWidth = "1" }
-style[".no-underline"] = { UnderlineWidth = "0" }
+style[".font-normal"] = { ["TextRun.FontWeight"] = "Normal" }
+style[".font-bold"] = { ["TextRun.FontWeight"] = "Bold" }
+style[".non-italic"] = { ["TextRun.FontStyle"] = "Normal" }
+style[".italic"] = { ["TextRun.FontStyle"] = "Italic" }
+style[".w-full"] = { ["Node.HorizontalAlignment"] = "Stretch" }
+style[".h-full"] = { ["Node.VerticalAlignment"] = "Stretch" }
+style[".rounded"] = { ["Node.BorderRadius"] = "8" }
+style[".border"] = { ["Node.BorderWidth"] = "1" }
+style[".underline"] = { ["TextRun.UnderlineWidth"] = "1" }
+style[".no-underline"] = { ["TextRun.UnderlineWidth"] = "0" }
 
 return style
