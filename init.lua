@@ -180,7 +180,8 @@ for k, v in pairs {
 	style[".justify-"..k] = { ["StackView.JustifyContent"] = v }
 end	
 
-
+style[".text-wrap"] = { ["TextBlockConcept.TextWrapping"] = "WrapWithOverflow" }
+style[".text-nowrap"] = { ["TextBlockConcept.TextWrapping"] = "NoWrap" }
 style[".font-normal"] = { ["TextRun.FontWeight"] = "Normal" }
 style[".font-bold"] = { ["TextRun.FontWeight"] = "Bold" }
 style[".non-italic"] = { ["TextRun.FontStyle"] = "Normal" }
