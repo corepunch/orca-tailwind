@@ -101,6 +101,12 @@ for _, v1 in ipairs(spacing) do
 end
 
 for _, v1 in ipairs(spacing) do
+	for k2, v2 in pairs { gap="Grid.Spacing" } do
+		style[string.format(".%s-%s", k2, v1)][v2] = v1*rem
+	end
+end
+
+for _, v1 in ipairs(spacing) do
 	for k2, v2 in pairs {
 			["border"]="Node.BorderWidth",
 			["underline"]="TextRun.UnderlineWidth",
@@ -180,6 +186,8 @@ for k, v in pairs {
 	style[".justify-"..k] = { ["StackView.JustifyContent"] = v }
 end	
 
+style[".text-clip"] = { ["TextBlockConcept.TextOverflow"] = "Clip" }
+style[".text-ellipsis"] = { ["TextBlockConcept.TextOverflow"] = "Ellipsis" }
 style[".text-wrap"] = { ["TextBlockConcept.TextWrapping"] = "WrapWithOverflow" }
 style[".text-nowrap"] = { ["TextBlockConcept.TextWrapping"] = "NoWrap" }
 style[".font-normal"] = { ["TextRun.FontWeight"] = "Normal" }
