@@ -40,8 +40,8 @@ for k1, v1 in pairs {m="Margin",p="Padding"} do
 			style[class] = { ["Node."..name] = string.format("%d", v3*rem) }
 		end
 		style[string.format(".%s-%s", k1, v3)] = {
-			["Node.Horizontal"..v1] = string.format("%d", v3*rem),
-			["Node.Vertical"..v1] = string.format("%d", v3*rem),
+			["Node.Horizontal"..v1] = string.format("%d %d", v3*rem, v3*rem),
+			["Node.Vertical"..v1] = string.format("%d %d", v3*rem, v3*rem),
 		}
 	end
 end
